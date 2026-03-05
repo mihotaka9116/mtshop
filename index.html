@@ -3,137 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miho Takahashi | Creative & Colorful</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Miho Takahashi | Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'serif': ['"Playfair Display"', 'serif'],
-                        'sans': ['"Inter"', 'sans-serif'],
-                    },
-                    colors: { 'accent-blue': '#2962ff' }
-                }
-            }
-        }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        tailwind.config = { theme: { extend: { colors: { 'accent-blue': '#007AFF' } } } }
+        .creative-underline { position: relative; }
+        .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: currentColor; transition: width 0.3s; }
+        .creative-underline:hover::after { width: 100%; }
+        [x-cloak] { display: none !important; }
     </style>
 </head>
-<body class="bg-[#FFF0F5] font-sans selection:bg-accent-blue selection:text-white">
+<body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp()">
 
-    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-8">
+    <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500" 
+         :class="scrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'"
+         @scroll.window="scrolled = (window.pageYOffset > 50)">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold tracking-tight text-accent-blue font-serif">Miho Takahashi</a>
-            <div class="hidden md:flex items-center space-x-8 text-xs font-bold uppercase tracking-widest">
-                <a href="#" class="opacity-70 hover:opacity-100">Home</a>
-                <a href="#concept" class="opacity-70 hover:opacity-100">Concept</a>
-                <a href="#detail" class="opacity-70 hover:opacity-100">Detail</a>
-                <a href="#lookbook" class="opacity-70 hover:opacity-100">Look Book</a>
-                <a href="#shop" class="opacity-70 hover:opacity-100">Shop</a>
-                <a href="#contact" class="opacity-70 hover:opacity-100">Contact</a>
+            <a href="#" class="text-2xl font-bold tracking-tight text-accent-blue">Miho Takahashi</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <template x-for="link in navLinks">
+                    <a :href="link.href" class="text-xs uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity" x-text="link.name"></a>
+                </template>
+                <button @click="cartOpen = true" class="relative p-2 text-accent-blue hover:scale-110 transition-transform">
+                    <i data-lucide="shopping-cart"></i>
+                    <span x-show="cartCount > 0" class="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center" x-text="cartCount"></span>
+                </button>
             </div>
         </div>
     </nav>
 
-    <section class="h-screen flex items-center justify-center text-center px-6">
-        <div>
-            <h1 class="text-6xl md:text-9xl font-serif font-bold mb-6 text-gray-800 leading-tight">
-                Creative & <br> <span class="text-accent-blue">Colorful</span>
-            </h1>
-            <p class="text-lg md:text-xl font-medium mb-12 text-gray-600">想いを色鮮やかに、カタチにする。</p>
-            <a href="#shop" class="bg-accent-blue text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-all inline-block shadow-lg">View Shop</a>
+    <section class="relative h-screen flex items-center justify-center bg-[#FFF0F5]">
+        <div class="text-center px-6">
+            <h1 class="text-5xl md:text-8xl font-serif font-bold mb-6 text-gray-800">Creative & <br><span class="text-accent-blue">Colorful</span></h1>
+            <button @click="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})" class="bg-accent-blue text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-all">View Shop</button>
         </div>
     </section>
 
-    <section id="concept" class="py-32 px-6 bg-white reveal">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-12 text-gray-800">Concept</h2>
-            <div class="text-lg text-gray-600 leading-relaxed space-y-6">
-                <p>Figmaで制作したSVGアニメーションを主役にした、ブランドサイトを制作しました。</p>
-                <p>JavaScriptのIntersection Observerを使用し、ユーザーの視線に合わせてコンテンツが展開するよう意識しました。</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="detail" class="py-32 px-6 reveal">
+    <section id="shop" class="py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center text-gray-800">Detail</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div class="bg-white p-10 rounded-3xl shadow-sm border border-pink-100">
-                    <span class="text-4xl font-bold text-accent-blue/10 mb-4 block">01</span>
-                    <h3 class="text-2xl font-bold mb-4">Material</h3>
-                    <p class="text-gray-600">毎日手に触れるものだからこそ、心地よく時の流れとともに愛着が増す素材を厳選しています。マグカップには温もりを感じる陶器を、アパレル商品には肌に優しいオーガニックコットンを採用。長く使い続けられる「品質」と「質感」を大切にしています。</p>
-                </div>
-                <div class="bg-white p-10 rounded-3xl shadow-sm border border-pink-100">
-                    <span class="text-4xl font-bold text-accent-blue/10 mb-4 block">02</span>
-                    <h3 class="text-2xl font-bold mb-4">Craftsmanship</h3>
-                    <p class="text-gray-600">「窓の青」をアクセントに、背景には「ピンク」を配置。カラフルでありながら、落ち着きと信頼感を感じさせる配色を追求しました。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="lookbook" class="py-32 px-6 bg-white reveal">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center text-gray-800">Look Book</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="aspect-video bg-[#FFF0F5] rounded-3xl overflow-hidden relative group cursor-pointer">
-                    <div class="absolute inset-0 flex items-center justify-center text-white bg-accent-blue/40 opacity-0 group-hover:opacity-100 transition-opacity font-bold text-2xl">Collection 2025 Winter</div>
-                    <img src="https://via.placeholder.com/800x450" class="w-full h-full object-cover">
-                </div>
-                <div class="aspect-video bg-[#FFF0F5] rounded-3xl overflow-hidden relative group cursor-pointer">
-                    <div class="absolute inset-0 flex items-center justify-center text-white bg-accent-blue/40 opacity-0 group-hover:opacity-100 transition-opacity font-bold text-2xl">Collection 2026 Spring</div>
-                    <img src="https://via.placeholder.com/800x450" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="shop" class="py-32 px-6 reveal">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6 text-center text-gray-800">Shop</h2>
-            <p class="text-center text-gray-600 mb-20">公式オンラインストアにて、最新コレクションを販売中。</p>
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center">Shop</h2>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-6 rounded-2xl text-center">
-                    <div class="aspect-square bg-[#FFF0F5] rounded-xl mb-4 p-4"><img src="https://via.placeholder.com/200" class="w-full h-full object-contain"></div>
-                    <h3 class="font-bold">Mag Cup</h3>
-                    <p class="text-accent-blue font-bold">¥2,800</p>
-                </div>
-                <div class="bg-white p-6 rounded-2xl text-center">
-                    <div class="aspect-square bg-[#FFF0F5] rounded-xl mb-4 p-4"><img src="https://via.placeholder.com/200" class="w-full h-full object-contain"></div>
-                    <h3 class="font-bold">Picture</h3>
-                    <p class="text-accent-blue font-bold">¥12,000</p>
-                </div>
-                </div>
-            <div class="mt-20 bg-white p-12 rounded-3xl text-center border-2 border-dashed border-accent-blue/20">
-                <h3 class="text-2xl font-bold mb-6">Goods Lineup</h3>
-                <p class="text-gray-600 max-w-2xl mx-auto">カラフルな中に静けさを感じさせるイラストを、日常生活に馴染むプロダクトへと展開しました。</p>
+                <template x-for="item in products" :key="item.id">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
+                        <div class="aspect-square mb-4 bg-pink-50 rounded-xl flex items-center justify-center p-4 relative">
+                            <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform">
+                            <button @click="addToCart(item)" class="absolute inset-0 flex items-center justify-center bg-accent-blue/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                                <span class="bg-accent-blue text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold text-gray-800" x-text="item.title"></h3>
+                        <p class="text-sm text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
+                    </div>
+                </template>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="py-32 px-6 bg-white text-center">
-        <h2 class="text-4xl md:text-5xl font-serif font-bold mb-12">Contact</h2>
-        <p class="text-gray-600 mb-12 max-w-xl mx-auto">制作のご依頼やグッズに関するお問い合わせは、以下のフォームよりお気軽にご連絡ください。</p>
-        <div class="bg-pink-50 p-4 rounded-lg inline-block text-xs text-pink-400 font-bold mb-12">※このサイトは制作課題です。実際に送信はできません</div>
-        <p class="text-xs text-gray-300 font-bold tracking-[0.3em]">©2026 MIHO TAKAHASHI</p>
-    </footer>
+    <div x-show="cartOpen" x-cloak class="fixed inset-0 z-[60]">
+        <div x-show="cartOpen" @click="cartOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity"></div>
+        <div x-show="cartOpen" x-transition:enter="transition ease-out duration-300 transform" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+            <div class="p-6 border-b flex justify-between items-center">
+                <h2 class="text-xl font-bold">Shopping Cart</h2>
+                <button @click="cartOpen = false" class="p-2 hover:bg-gray-100 rounded-full"><i data-lucide="x"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                <template x-if="cart.length === 0">
+                    <div class="h-full flex flex-col items-center justify-center text-gray-400">
+                        <i data-lucide="shopping-cart" class="w-12 h-12 mb-4"></i>
+                        <p>Your cart is empty</p>
+                    </div>
+                </template>
+                <template x-for="item in cart" :key="item.id">
+                    <div class="flex space-x-4">
+                        <div class="w-20 h-20 bg-pink-50 rounded-xl p-2"><img :src="item.img" class="w-full h-full object-contain"></div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-gray-800" x-text="item.title"></h3>
+                            <p class="text-sm text-gray-500 mb-2" x-text="'¥' + item.price.toLocaleString()"></p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center border rounded-lg">
+                                    <button @click="updateQty(item.id, -1)" class="p-1 px-2">-</button>
+                                    <span class="px-2 text-sm" x-text="item.quantity"></span>
+                                    <button @click="updateQty(item.id, 1)" class="p-1 px-2">+</button>
+                                </div>
+                                <button @click="removeFromCart(item.id)" class="text-gray-400 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+            <div x-show="cart.length > 0" class="p-6 border-t bg-pink-50/30">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-gray-600">Total</span>
+                    <span class="text-2xl font-bold" x-text="'¥' + total.toLocaleString()"></span>
+                </div>
+                <button class="w-full bg-accent-blue text-white py-4 rounded-xl font-bold uppercase">Checkout</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        lucide.createIcons();
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            nav.style.backgroundColor = window.scrollY > 50 ? 'rgba(255,255,255,0.8)' : 'transparent';
-            nav.style.backdropFilter = window.scrollY > 50 ? 'blur(8px)' : 'none';
-        });
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        function shopApp() {
+            return {
+                scrolled: false,
+                cartOpen: false,
+                cart: [],
+                navLinks: [
+                    { name: 'Home', href: '#' },
+                    { name: 'Concept', href: '#concept' },
+                    { name: 'Shop', href: '#shop' },
+                ],
+                products: [
+                    { id: '01', title: 'Mag Cup', price: 2800, img: 'https://via.placeholder.com/200' },
+                    { id: '02', title: 'Picture', price: 12000, img: 'https://via.placeholder.com/200' },
+                    { id: '03', title: 'Cushion', price: 4500, img: 'https://via.placeholder.com/200' },
+                    { id: '04', title: 'T-shirt', price: 3800, img: 'https://via.placeholder.com/200' },
+                ],
+                get cartCount() { return this.cart.reduce((sum, item) => sum + item.quantity, 0) },
+                get total() { return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) },
+                addToCart(product) {
+                    const existing = this.cart.find(i => i.id === product.id);
+                    if (existing) { existing.quantity++ } else { this.cart.push({...product, quantity: 1}) }
+                    this.cartOpen = true;
+                    setTimeout(() => lucide.createIcons(), 10);
+                },
+                updateQty(id, delta) {
+                    const item = this.cart.find(i => i.id === id);
+                    if (item) { item.quantity = Math.max(1, item.quantity + delta) }
+                },
+                removeFromCart(id) { this.cart = this.cart.filter(i => i.id !== id) },
+                init() { lucide.createIcons(); }
+            }
+        }
     </script>
+
+   <footer id="contact" class="bg-white border-t border-pink-100 pt-20 pb-10 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+            
+            <div class="space-y-6">
+                <h3 class="text-2xl font-bold text-accent-blue">Miho Takahashi</h3>
+                <p class="text-gray-500 text-sm leading-relaxed max-w-xs">
+                    日常に彩りを添える、ハンドメイドの温もり。ひとつひとつ心を込めて制作しています。
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-4">
+                    <h4 class="text-xs uppercase font-bold tracking-widest text-gray-400">Menu</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-accent-blue transition-colors">Home</a></li>
+                        <li><a href="#concept" class="hover:text-accent-blue transition-colors">Concept</a></li>
+                        <li><a href="#shop" class="hover:text-accent-blue transition-colors">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-xs uppercase font-bold tracking-widest text-gray-400">Social</h4>
+                    <ul class="space-y-2 text-sm flex flex-col">
+                        <a href="#" class="inline-flex items-center hover:text-accent-blue transition-colors group">
+                            <i data-lucide="instagram" class="w-4 h-4 mr-2"></i> Instagram
+                        </a>
+                        <a href="mailto:your-email@example.com" class="inline-flex items-center hover:text-accent-blue transition-colors group">
+                            <i data-lucide="mail" class="w-4 h-4 mr-2"></i> Contact
+                        </a>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h4 class="text-xs uppercase font-bold tracking-widest text-gray-400">Newsletter</h4>
+                <div class="flex">
+                    <input type="email" placeholder="Your email" class="bg-pink-50 border-none px-4 py-2 rounded-l-lg focus:ring-1 focus:ring-accent-blue outline-none w-full text-sm">
+                    <button class="bg-accent-blue text-white px-4 py-2 rounded-r-lg hover:bg-blue-600 transition-colors">
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p class="text-[10px] text-gray-400 font-bold tracking-[0.3em]">©2026 MIHO TAKAHASHI ALL RIGHTS RESERVED.</p>
+            <div class="flex space-x-6 text-[10px] text-gray-400 font-bold tracking-widest">
+                <a href="#" class="hover:text-gray-600">PRIVACY POLICY</a>
+                <a href="#" class="hover:text-gray-600">TERMS OF SERVICE</a>
+            </div>
+        </div>
+    </div>
+</footer> 
 </body>
 </html>
