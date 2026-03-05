@@ -155,3 +155,18 @@ export default function App() {
       <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} items={cart} onUpdateQuantity={updateQuantity} onRemove={removeFromCart} />
       {/* 他のセクション（Hero, Concept, Detail, LookBook, Shop, Contact）がここに続きます */}
     </div>
+
+
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        // 'font-playfair' という名前で Playfair Display を登録
+        'playfair': ['"Playfair Display"', 'serif'],
+      },
+      colors: {
+        'accent-blue': '#2962ff',
+      }
+    }
+  }
+}
