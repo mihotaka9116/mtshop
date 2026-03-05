@@ -1,12 +1,136 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miho Takahashi | Creative & Colorful</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* カスタム設定 */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'accent-blue': '#007AFF',
+                    }
+                }
+            }
+        }
+        
+        .creative-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .creative-underline::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        .creative-underline:hover::after {
+            width: 100%;
+        }
+
+        /* フェードインアニメーション用 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-white selection:bg-accent-blue selection:text-white">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tight text-accent-blue">Miho Takahashi</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="text-xs uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity">Home</a>
+                <a href="#concept" class="text-xs uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity">Concept</a>
+                <a href="#shop" class="text-xs uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity">Shop</a>
+                <button class="relative p-2 text-accent-blue hover:scale-110 transition-transform">
+                    <i data-lucide="shopping-cart"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-[#FFF0F5]">
+        <div class="relative z-10 text-center px-6">
+            <h1 class="text-5xl md:text-8xl font-serif font-bold mb-6 text-gray-800">
+                Creative & <br> <span class="text-accent-blue">Colorful</span>
+            </h1>
+            <p class="text-lg md:text-xl font-medium mb-12 text-gray-600">想いを色鮮やかに、カタチにする。</p>
+            <a href="#shop" class="bg-accent-blue text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:shadow-lg hover:scale-105 transition-all inline-block">
+                View Shop
+            </a>
+        </div>
+    </section>
+
+    <section id="concept" class="py-32 px-6 bg-white reveal">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-12 text-gray-800">Concept</h2>
+            <div class="text-lg text-gray-600 leading-relaxed space-y-6">
+                <p>想いを色鮮やかに、カタチにするブランドサイト。</p>
+                <p>ユーザーの視線に合わせて、心地よくコンテンツが展開します。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="py-32 px-6 bg-[#FFF0F5]">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center text-gray-800">Shop</h2>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-all reveal">
+                    <div class="aspect-square mb-4 bg-pink-50 rounded-xl flex items-center justify-center p-4">
+                        <img src="https://via.placeholder.com/200" alt="Item" class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="font-bold text-gray-800">Mag Cup</h3>
+                    <p class="text-sm text-gray-500">¥2,800</p>
+                </div>
+                </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-20 px-6 bg-white text-center">
+        <p class="text-xs text-gray-300 font-bold tracking-[0.3em]">©2026 MIHO TAKAHASHI</p>
+    </footer>
+
+    <script>
+        // アイコンの初期化
+        lucide.createIcons();
+
+        // スクロール時にナビゲーションの色を変える
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+                nav.classList.remove('py-8');
+            } else {
+                nav.classList.remove('bg-white/80', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+                nav.classList.add('py-8');
+            }
+        });
+
+        // Intersection Observer (スクロールアニメーション)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
 </html>
