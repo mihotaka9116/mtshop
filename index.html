@@ -17,7 +17,7 @@
 </head>
 <body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp()">
 
-  <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500" 
+ <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500" 
      :class="scrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'"
      @scroll.window="scrolled = (window.pageYOffset > 50)">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -47,16 +47,17 @@
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
          x-cloak
-         class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center space-y-8 md:hidden">
-        <template x-for="link in navLinks">
-            <a :href="link.href" 
-               @click="mobileMenuOpen = false"
-               class="text-xl uppercase font-bold tracking-[0.2em] text-gray-800 hover:text-accent-blue" 
-               x-text="link.name"></a>
-        </template>
+         class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center overflow-y-auto md:hidden">
+        <div class="flex flex-col items-center justify-center space-y-8 py-20">
+            <template x-for="link in navLinks">
+                <a :href="link.href" 
+                   @click="mobileMenuOpen = false"
+                   class="text-xl uppercase font-bold tracking-[0.2em] text-gray-800 hover:text-accent-blue" 
+                   x-text="link.name"></a>
+            </template>
+        </div>
     </div>
 </nav>
-
     <section class="relative h-screen flex items-center justify-center bg-[#FFF0F5]">
         <div class="text-center px-6">
             <h1 class="text-5xl md:text-8xl font-serif font-bold mb-6 text-gray-800">Creative & <br><span class="text-accent-blue">Colorful</span></h1>
