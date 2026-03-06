@@ -105,25 +105,25 @@
     </div>
 </section>
 
-    <section id="shop" class="py-32 px-6 bg-white">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center">Shop</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <template x-for="item in products" :key="item.id">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all group">
-                        <div class="aspect-square mb-4 bg-pink-50 rounded-xl flex items-center justify-center p-4 relative">
-                            <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform">
-                            <button @click="addToCart(item)" class="absolute inset-0 flex items-center justify-center bg-accent-blue/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
-                                <span class="bg-accent-blue text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></span>
-                            </button>
-                        </div>
-                        <h3 class="font-bold text-gray-800" x-text="item.title"></h3>
-                        <p class="text-sm text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
+  <section id="shop" class="py-32 px-6 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center">Shop</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <template x-for="item in products" :key="item.id">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all group text-center">
+                    <div class="aspect-square mb-4 bg-pink-50 rounded-xl flex items-center justify-center p-4 relative">
+                        <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform">
+                        <button @click="addToCart(item)" class="absolute inset-0 flex items-center justify-center bg-accent-blue/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                            <span class="bg-accent-blue text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></span>
+                        </button>
                     </div>
-                </template>
-            </div>
+                    <h3 class="font-bold text-gray-800" x-text="item.title"></h3>
+                    <p class="text-sm text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
+                </div>
+            </template>
         </div>
-    </section>
+    </div>
+</section>
 
     <div x-show="cartOpen" x-cloak class="fixed inset-0 z-[70]">
         <div x-show="cartOpen" @click="cartOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity"></div>
