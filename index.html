@@ -118,21 +118,21 @@
         <h2 class="text-4xl md:text-5xl font-serif font-bold mb-16 text-center">Look Book</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto items-stretch">
             
-            <div class="group flex flex-col h-full">
-                <div class="aspect-[4/5] bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 flex items-center justify-center p-4 h-full">
+            <div class="group flex flex-col h-full text-center">
+                <div class="aspect-[4/5] bg-white rounded-[40px] overflow-hidden shadow-sm transition-all duration-700 flex items-center justify-center p-4 h-full">
                     <img src="sinkaiwhite.svg" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700" alt="2025 Winter">
                 </div>
-                <div class="mt-8 text-center md:text-left flex-none">
+                <div class="mt-8 text-center flex-none">
                     <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-2">2025 Winter collection</p>
                     <h3 class="text-2xl font-serif font-bold">Sinkai - 深海</h3>
                 </div>
             </div>
 
-            <div class="group flex flex-col h-full">
-                <div class="aspect-[4/5] bg-white rounded-[40px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-700 flex items-center justify-center p-4 h-full">
+            <div class="group flex flex-col h-full text-center">
+                <div class="aspect-[4/5] bg-white rounded-[40px] overflow-hidden shadow-sm transition-all duration-700 flex items-center justify-center p-4 h-full">
                     <img src="siteimage.svg" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700" alt="2026 Spring">
                 </div>
-                <div class="mt-8 text-center md:text-left flex-none">
+                <div class="mt-8 text-center flex-none">
                     <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-2">2026 Spring collection</p>
                     <h3 class="text-2xl font-serif font-bold">New Bloom - 萌芽</h3>
                 </div>
@@ -237,7 +237,6 @@
                 if (existing) { existing.quantity++ } else { this.cart.push({...product, quantity: 1}) }
                 this.cartOpen = true;
                 this.purchaseStep = 'cart';
-                // JSアイコンの再描画（一応残す）
                 setTimeout(() => lucide.createIcons(), 100);
             },
             removeFromCart(id) { this.cart = this.cart.filter(i => i.id !== id) },
