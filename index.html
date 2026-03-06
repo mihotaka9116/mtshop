@@ -138,23 +138,27 @@
 <section id="shop" class="py-32 px-6 bg-white">
     <div class="max-w-7xl mx-auto">
         <h2 class="text-4xl md:text-6xl font-main-title font-bold mb-24 text-center">Shop</h2>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-12">
             <template x-for="item in products" :key="item.id">
                 <div class="flex flex-col items-center text-center group">
-                    <div class="w-full aspect-square mb-6 bg-pink-50/50 rounded-3xl flex items-center justify-center p-6 relative overflow-hidden transition-all group-hover:shadow-xl">
+                    <div class="w-full aspect-square mb-6 bg-pink-50/50 rounded-3xl flex items-center justify-center p-8 relative overflow-hidden transition-all group-hover:shadow-xl border border-pink-100/20">
                         <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
-                        <button @click="addToCart(item)" class="absolute inset-0 flex items-center justify-center bg-accent-blue/5 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="bg-accent-blue text-white p-4 rounded-full shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-all"><i data-lucide="plus"></i></span>
+                        
+                        <button @click="addToCart(item)" class="absolute bottom-6 right-6 md:inset-0 md:flex md:items-center md:justify-center bg-accent-blue md:bg-accent-blue/5 text-white md:opacity-0 group-hover:opacity-100 transition-opacity rounded-full md:rounded-none p-4 md:p-0">
+                            <span class="md:bg-accent-blue md:text-white md:p-4 md:rounded-full md:shadow-lg transform md:translate-y-4 group-hover:translate-y-0 transition-all">
+                                <i data-lucide="plus"></i>
+                            </span>
                         </button>
                     </div>
-                    <h3 class="font-bold text-gray-800 mb-1" x-text="item.title"></h3>
-                    <p class="text-sm text-gray-400 font-main-title italic" x-text="'¥' + item.price.toLocaleString()"></p>
+                    
+                    <h3 class="text-xl md:text-base font-bold text-gray-800 mb-1" x-text="item.title"></h3>
+                    <p class="text-base md:text-sm text-gray-400 font-main-title italic" x-text="'¥' + item.price.toLocaleString()"></p>
                 </div>
             </template>
         </div>
     </div>
 </section>
-
 <footer id="contact" class="bg-white border-t border-pink-100 pt-24 pb-12 px-6">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24">
