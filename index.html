@@ -17,7 +17,7 @@
 </head>
 <body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp()">
 
-   <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500" 
+  <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500" 
      :class="scrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'"
      @scroll.window="scrolled = (window.pageYOffset > 50)">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -30,12 +30,12 @@
                 </template>
             </div>
 
-            <button @click="cartOpen = true" class="relative p-2 text-accent-blue hover:scale-110 transition-transform">
+            <button @click="cartOpen = true" class="relative p-2 text-accent-blue">
                 <i data-lucide="shopping-cart"></i>
                 <span x-show="cartCount > 0" class="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center" x-text="cartCount"></span>
             </button>
 
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-accent-blue z-50">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-accent-blue z-[60]">
                 <i data-lucide="menu" x-show="!mobileMenuOpen"></i>
                 <i data-lucide="x" x-show="mobileMenuOpen" x-cloak></i>
             </button>
@@ -47,8 +47,7 @@
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
          x-cloak
-         @click="mobileMenuOpen = false"
-         class="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center space-y-8 md:hidden">
+         class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center space-y-8 md:hidden">
         <template x-for="link in navLinks">
             <a :href="link.href" 
                @click="mobileMenuOpen = false"
