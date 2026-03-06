@@ -8,16 +8,24 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { 'accent-blue': '#2962ff' }
+                }
+            }
+        }
         [x-cloak] { display: none !important; }
         .creative-underline { position: relative; }
         .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #2962ff; transition: width 0.3s; }
         .creative-underline:hover::after { width: 100%; }
+        html { scroll-behavior: smooth; } /* スムーズスクロールを有効化 */
     </style>
 </head>
-<body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp">
+<body class="bg-white text-gray-900" x-data="shopApp">
 
     <nav class="fixed top-0 left-0 w-full z-50 transition-all duration-500" 
-         :class="scrolled ? 'bg-white/80 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'"
+         :class="scrolled ? 'bg-white/90 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'"
          @scroll.window="scrolled = (window.pageYOffset > 50)">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold tracking-tight text-accent-blue">Miho Takahashi</a>
@@ -33,13 +41,25 @@
             </div>
 
             <div class="flex items-center space-x-4 md:hidden">
-                <button @click="cartOpen = true" class="relative p-2 text-accent-blue">
-                    <i data-lucide="shopping-cart"></i>
-                </button>
+                <button @click="cartOpen = true" class="relative p-2 text-accent-blue"><i data-lucide="shopping-cart"></i></button>
                 <button @click="mobileMenuOpen = true" class="p-2 text-accent-blue"><i data-lucide="menu"></i></button>
             </div>
         </div>
     </nav>
 
     <div x-show="mobileMenuOpen" x-cloak class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center space-y-8 md:hidden">
-        <button @click="mobileMenuOpen = false" class="absolute top-8 right-6 p-2 text-accent-blue"><i data-lucide
+        <button @click="mobileMenuOpen = false" class="absolute top-8 right-6 p-2 text-accent-blue"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <template x-for="link in navLinks">
+            <a :href="link.href" @click="mobileMenuOpen = false" class="text-2xl font-bold text-accent-blue" x-text="link.name"></a>
+        </template>
+    </div>
+
+    <section class="relative h-[60vh] flex items-center justify-center bg-[#FFF0F5]">
+        <div class="text-center px-6">
+            <h1 class="text-5xl md:text-8xl font-serif font-bold mb-6 text-gray-800">Creative & <br><span class="text-accent-blue">Colorful</span></h1>
+        </div>
+    </section>
+
+    <section id="concept" class="py-24 px-6 bg-white">
+        <div class="max-w-3xl mx-auto text-center">
+            <h
