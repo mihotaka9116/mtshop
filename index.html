@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miho Takahashi | Shop</title>
+    <title>Miho Takahashi | Official Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         tailwind.config = { 
             theme: { 
                 extend: { 
-                    colors: { 'accent-blue': '#2962ff' },
-                    fontFamily: { 'playfair': ['"Playfair Display"', 'serif'] }
+                    colors: { 'accent-blue': '#2962ff' }
                 } 
             } 
         }
         [x-cloak] { display: none !important; }
         html { scroll-behavior: smooth; }
-        /* 【重要】メニューに隠れないための余白設定 */
-        section { scroll-margin-top: 100px; }
+        /* 固定ヘッダー分の余白 */
+        section { scroll-margin-top: 80px; }
+        
+        /* タイトルの字体（以前の力強いセリフ体） */
+        .font-main-title {
+            font-family: "Times New Roman", Times, serif;
+        }
+
         .creative-underline { position: relative; }
         .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: currentColor; transition: width 0.3s; }
         .creative-underline:hover::after { width: 100%; }
@@ -32,7 +36,7 @@
          :class="scrolled ? 'bg-white/90 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-8'"
          @scroll.window="scrolled = (window.pageYOffset > 50)">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center relative z-[110]">
-            <a href="#home" class="text-2xl font-bold tracking-tight text-accent-blue font-playfair">Miho Takahashi</a>
+            <a href="#home" class="text-2xl font-bold tracking-tight text-accent-blue font-main-title">Miho Takahashi</a>
             
             <div class="flex items-center space-x-6">
                 <div class="hidden md:flex items-center space-x-8">
@@ -40,12 +44,10 @@
                         <a :href="link.href" class="text-[10px] uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity" x-text="link.name"></a>
                     </template>
                 </div>
-
                 <button @click="cartOpen = true" class="relative p-2 text-accent-blue hover:scale-110 transition-transform">
                     <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                     <span x-show="cartCount > 0" class="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center" x-text="cartCount"></span>
                 </button>
-
                 <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-accent-blue relative z-[120]">
                     <span x-show="!mobileMenuOpen"><i data-lucide="menu"></i></span>
                     <span x-show="mobileMenuOpen" x-cloak><i data-lucide="x"></i></span>
@@ -53,135 +55,17 @@
             </div>
         </div>
 
-        <div x-show="mobileMenuOpen" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-[-10px]"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             x-transition:leave="transition ease-in duration-200"
-             x-cloak
-             class="fixed inset-0 bg-white z-[105] flex flex-col items-center justify-center md:hidden h-screen w-screen">
+        <div x-show="mobileMenuOpen" x-transition x-cloak
+             class="fixed inset-0 bg-white z-[105] flex flex-col items-center justify-center md:hidden w-full h-full">
             <div class="flex flex-col items-center space-y-10">
                 <template x-for="link in navLinks">
-                    <a :href="link.href" 
-                       @click="mobileMenuOpen = false" 
-                       class="text-3xl font-playfair font-bold tracking-widest text-gray-800 hover:text-accent-blue transition-colors" 
-                       x-text="link.name"></a>
+                    <a :href="link.href" @click="mobileMenuOpen = false" 
+                       class="text-3xl font-main-title font-bold tracking-widest text-gray-800" x-text="link.name"></a>
                 </template>
             </div>
         </div>
     </nav>
 
-    <section id="home" class="h-screen flex items-center justify-center bg-[#FFF0F5] relative">
-        <div class="text-center px-6">
-            <h1 class="text-6xl md:text-9xl font-playfair font-bold mb-8 text-gray-800">Creative & <br><span class="text-accent-blue">Colorful</span></h1>
-            <a href="#shop" class="inline-block bg-accent-blue text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:shadow-2xl transition-all">Explore Shop</a>
-        </div>
-    </section>
-
-    <section id="concept" class="py-32 px-6 bg-white">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="text-accent-blue text-xs font-bold tracking-[0.4em] uppercase block mb-8">Concept</span>
-            <h2 class="text-4xl font-playfair font-bold mb-10 text-gray-800 italic">"Art in Everyday Life"</h2>
-            <p class="text-gray-500 leading-[2] text-lg">日常を彩る、小さな物語をお届けします。</p>
-        </div>
-    </section>
-
-    <section id="lookbook" class="py-32 bg-gray-50 px-6">
-        <div class="max-w-7xl mx-auto text-center">
-            <span class="text-accent-blue text-xs font-bold tracking-[0.4em] uppercase block mb-8">Look Book</span>
-            <h2 class="text-4xl font-playfair font-bold mb-16">Collections</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="bg-gray-200 aspect-[4/5] rounded-3xl flex items-center justify-center overflow-hidden">
-                    <img src="look1.jpg" alt="Look 1" class="w-full h-full object-cover">
-                </div>
-                <div class="bg-gray-200 aspect-[4/5] rounded-3xl flex items-center justify-center overflow-hidden">
-                    <img src="look2.jpg" alt="Look 2" class="w-full h-full object-cover">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="shop" class="py-32 px-6 bg-white">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-4xl font-playfair font-bold mb-20">Shop</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <template x-for="item in products" :key="item.id">
-                    <div class="text-center group">
-                        <div class="aspect-square bg-gray-50 rounded-2xl mb-4 relative overflow-hidden">
-                            <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform">
-                            <button @click="addToCart(item)" class="absolute bottom-4 right-4 bg-accent-blue text-white p-3 rounded-full shadow-lg">
-                                <i data-lucide="plus"></i>
-                            </button>
-                        </div>
-                        <h3 class="font-bold text-sm" x-text="item.title"></h3>
-                        <p class="text-gray-400 text-xs" x-text="'¥' + item.price"></p>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact" class="bg-white border-t border-gray-100 pt-24 pb-12 px-6">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div>
-                <h3 class="font-playfair font-bold text-accent-blue text-2xl mb-6">Miho Takahashi</h3>
-                <p class="text-gray-400 text-sm">Coloring your daily life with art.</p>
-            </div>
-            <div>
-                <h4 class="font-bold text-xs uppercase tracking-widest mb-6 text-gray-400">Links</h4>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="#home" class="hover:text-accent-blue transition-colors">Home</a></li>
-                    <li><a href="#concept" class="hover:text-accent-blue transition-colors">Concept</a></li>
-                    <li><a href="#lookbook" class="hover:text-accent-blue transition-colors">Look Book</a></li>
-                    <li><a href="#shop" class="hover:text-accent-blue transition-colors">Shop</a></li>
-                </ul>
-            </div>
-            <div class="md:col-span-2">
-                <h4 class="font-bold text-xs uppercase tracking-widest mb-6 text-gray-400">Newsletter</h4>
-                <div class="flex border-b border-gray-200 py-2">
-                    <input type="email" placeholder="Email address" class="flex-1 outline-none text-sm">
-                    <button class="text-accent-blue"><i data-lucide="arrow-right"></i></button>
-                </div>
-            </div>
-        </div>
-        <p class="mt-20 text-center text-[10px] text-gray-300 tracking-[0.3em]">©2026 MIHO TAKAHASHI STUDIO</p>
-    </footer>
-
-    <div x-show="cartOpen" x-cloak class="fixed inset-0 z-[150]">
-        <div @click="cartOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
-        <div x-show="cartOpen" x-transition:enter="transition transform duration-300" x-transition:enter-start="translate-x-full" class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl p-8">
-            <div class="flex justify-between items-center mb-10">
-                <h2 class="text-2xl font-playfair font-bold">Cart</h2>
-                <button @click="cartOpen = false"><i data-lucide="x"></i></button>
-            </div>
-        </div>
-    </div>
-
-<script>
-    function shopApp() {
-        return {
-            scrolled: false,
-            mobileMenuOpen: false,
-            cartOpen: false,
-            cart: [],
-            navLinks: [
-                { name: 'Home', href: '#home' },
-                { name: 'Concept', href: '#concept' },
-                { name: 'Look Book', href: '#lookbook' },
-                { name: 'Shop', href: '#shop' },
-                { name: 'Contact', href: '#contact' }
-            ],
-            products: [
-                { id: 1, title: 'Mag Cup', price: 3200, img: 'mag.png' },
-                { id: 2, title: 'Cushion', price: 5800, img: 'cusion.png' },
-                { id: 3, title: 'Art Print', price: 15000, img: 'art.png' },
-                { id: 4, title: 'T-shirt', price: 4500, img: 'shirt.png' }
-            ],
-            get cartCount() { return this.cart.length },
-            addToCart(p) { this.cart.push(p); this.cartOpen = true; },
-            init() { lucide.createIcons(); }
-        }
-    }
-</script>
-</body>
-</html>
+    <section id="home" class="h-screen flex items-center justify-center bg-[#FFF0F5] relative overflow-hidden">
+        <div class="text-center relative z-10 px-6">
+            <h1 class="text-5xl md:text-8xl font-main
