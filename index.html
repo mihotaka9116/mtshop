@@ -8,16 +8,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: { 'accent-blue': '#2962ff' }
-                }
-            }
-        }
         [x-cloak] { display: none !important; }
         .creative-underline { position: relative; }
-        .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: currentColor; transition: width 0.3s; }
+        .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: #2962ff; transition: width 0.3s; }
         .creative-underline:hover::after { width: 100%; }
     </style>
 </head>
@@ -28,6 +21,7 @@
          @scroll.window="scrolled = (window.pageYOffset > 50)">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold tracking-tight text-accent-blue">Miho Takahashi</a>
+            
             <div class="hidden md:flex items-center space-x-8">
                 <template x-for="link in navLinks" :key="link.name">
                     <a :href="link.href" class="text-xs uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity" x-text="link.name"></a>
@@ -37,6 +31,7 @@
                     <span x-show="cartCount > 0" class="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center" x-text="cartCount"></span>
                 </button>
             </div>
+
             <div class="flex items-center space-x-4 md:hidden">
                 <button @click="cartOpen = true" class="relative p-2 text-accent-blue">
                     <i data-lucide="shopping-cart"></i>
@@ -46,89 +41,5 @@
         </div>
     </nav>
 
-    <section class="relative h-[60vh] flex items-center justify-center bg-[#FFF0F5]">
-        <div class="text-center px-6">
-            <h1 class="text-5xl md:text-8xl font-serif font-bold mb-6 text-gray-800">Creative & <br><span class="text-accent-blue">Colorful</span></h1>
-        </div>
-    </section>
-
-    <section id="shop" class="py-24 px-6 bg-white">
-        <div class="max-w-7xl mx-auto text-center">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-gray-800">Shop</h2>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-                <template x-for="item in products" :key="item.id">
-                    <div class="group flex flex-col items-center">
-                        
-                        <div class="w-full h-48 md:h-64 mb-6 relative flex items-center justify-center overflow-hidden">
-                            <img :src="item.img" :alt="item.title" class="max-w-full max-h-full object-contain">
-                            
-                            <button @click="addToCart(item)" class="absolute bottom-2 right-2 bg-white text-accent-blue p-3 rounded-lg shadow-lg opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all">
-                                <i data-lucide="plus" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-
-                        <div class="text-center">
-                            <h3 class="font-bold text-sm md:text-base text-gray-800 mb-1 uppercase tracking-widest" x-text="item.title"></h3>
-                            <p class="text-accent-blue font-bold text-sm md:text-base" x-text="'¥' + item.price.toLocaleString()"></p>
-                        </div>
-
-                    </div>
-                </template>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact" class="bg-gray-50 pt-20 pb-10 px-6 border-t mt-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-left">
-            <div>
-                <h3 class="text-xl font-bold text-accent-blue mb-4">Miho Takahashi</h3>
-                <p class="text-sm text-gray-500 leading-relaxed max-w-xs">
-                    日々の暮らしに、少しの彩りとワクワクを。制作したイラストをグッズにし販売しています。
-                </p>
-            </div>
-            <div>
-                <h4 class="text-xs uppercase font-bold text-gray-400 mb-4 tracking-widest">Menu</h4>
-                <ul class="text-sm space-y-3 text-gray-600">
-                    <li><a href="#" class="hover:text-accent-blue transition-colors">Home</a></li>
-                    <li><a href="#shop" class="hover:text-accent-blue transition-colors">Shop</a></li>
-                    <li><a href="#contact" class="hover:text-accent-blue transition-colors">Contact</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-xs uppercase font-bold text-gray-400 mb-4 tracking-widest">Connect</h4>
-                <div class="flex space-x-4 text-gray-600">
-                    <a href="#" class="hover:text-accent-blue transition-colors"><i data-lucide="instagram"></i></a>
-                    <a href="#" class="hover:text-accent-blue transition-colors"><i data-lucide="mail"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="max-w-7xl mx-auto pt-8 border-t border-gray-200 text-center">
-            <p class="text-[10px] text-gray-400 tracking-widest uppercase">
-                ©2026 Miho Takahashi All Rights Reserved.
-            </p>
-        </div>
-    </footer>
-
-    <div x-show="cartOpen" x-cloak class="fixed inset-0 z-[150]">
-        <div @click="cartOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
-        <div class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col" 
-             x-transition:enter="transition transform duration-300" 
-             x-transition:enter-start="translate-x-full" 
-             x-transition:enter-end="translate-x-0">
-            <div class="p-6 border-b flex justify-between items-center">
-                <h2 class="text-xl font-bold">Shopping Cart</h2>
-                <button @click="cartOpen = false" class="p-2"><i data-lucide="x"></i></button>
-            </div>
-            <div class="flex-1 overflow-y-auto p-6 space-y-6">
-                <template x-if="cart.length === 0"><p class="text-center text-gray-400 py-10">カートは空です</p></template>
-                <template x-for="item in cart" :key="item.id">
-                    <div class="flex space-x-4 items-center border-b pb-4">
-                        <img :src="item.img" class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
-                        <div class="flex-1">
-                            <h4 class="font-bold text-sm" x-text="item.title"></h4>
-                            <p class="text-xs text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
-                            <div class="flex items-center justify-between mt-1">
-                                <div class="flex items-center border rounded-md">
-                                    <button @click="updateQty(item.id, -1)" class="px-2">-</button>
-                                    <span class="px-2 text-xs
+    <div x-show="mobileMenuOpen" x-cloak class="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center space-y-8 md:hidden">
+        <button @click="mobileMenuOpen = false" class="absolute top-8 right-6 p-2 text-accent-blue"><i data-lucide
