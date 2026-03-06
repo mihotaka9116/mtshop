@@ -127,40 +127,43 @@
         </div>
     </div>
 
-    <script>
-        function shopApp() {
-            return {
-                scrolled: false,
-                cartOpen: false,
-                cart: [],
-                navLinks: [
-                    { name: 'Home', href: '#' },
-                    { name: 'Concept', href: '#concept' },
-                    { name: 'Shop', href: '#shop' },
-                ],
-                products: [
-                    { id: '01', title: 'Mag Cup', price: 2800, img: 'mag.png' },
-                    { id: '02', title: 'Picture', price: 12000, img: 'kaiga.png' },
-                    { id: '03', title: 'Cushion', price: 4500, img: 'cusion.png' },
-                    { id: '04', title: 'T-shirt', price: 3800, img: 'shirt.png' },
-                ],
-                get cartCount() { return this.cart.reduce((sum, item) => sum + item.quantity, 0) },
-                get total() { return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) },
-                addToCart(product) {
-                    const existing = this.cart.find(i => i.id === product.id);
-                    if (existing) { existing.quantity++ } else { this.cart.push({...product, quantity: 1}) }
-                    this.cartOpen = true;
-                    setTimeout(() => lucide.createIcons(), 10);
-                },
-                updateQty(id, delta) {
-                    const item = this.cart.find(i => i.id === id);
-                    if (item) { item.quantity = Math.max(1, item.quantity + delta) }
-                },
-                removeFromCart(id) { this.cart = this.cart.filter(i => i.id !== id) },
-                init() { lucide.createIcons(); }
-            }
+<script>
+    function shopApp() {
+        return {
+            scrolled: false,
+            cartOpen: false,
+            mobileMenuOpen: false, 
+            cart: [],
+            navLinks: [
+                { name: 'Home', href: '#' },
+                { name: 'Concept', href: '#concept' },
+                { name: 'Shop', href: '#shop' },
+                { name: 'Contact', href: '#contact' },
+            ],
+            // 商品データをご自身のもの（mag.png等）に戻しました
+            products: [
+                { id: '01', title: 'Mag Cup', price: 2800, img: 'mag.png' },
+                { id: '02', title: 'Art Print', price: 12000, img: 'kaiga.png' },
+                { id: '03', title: 'Cushion', price: 4500, img: 'cusion.png' },
+                { id: '04', title: 'T-shirt', price: 3800, img: 'shirt.png' },
+            ],
+            get cartCount() { return this.cart.reduce((sum, item) => sum + item.quantity, 0) },
+            get total() { return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) },
+            addToCart(product) {
+                const existing = this.cart.find(i => i.id === product.id);
+                if (existing) { existing.quantity++ } else { this.cart.push({...product, quantity: 1}) }
+                this.cartOpen = true;
+                setTimeout(() => lucide.createIcons(), 10);
+            },
+            updateQty(id, delta) {
+                const item = this.cart.find(i => i.id === id);
+                if (item) { item.quantity = Math.max(1, item.quantity + delta) }
+            },
+            removeFromCart(id) { this.cart = this.cart.filter(i => i.id !== id) },
+            init() { lucide.createIcons(); }
         }
-    </script>
+    }
+</script>
 
    <footer id="contact" class="bg-white border-t border-pink-100 pt-20 pb-10 px-6">
     <div class="max-w-7xl mx-auto">
