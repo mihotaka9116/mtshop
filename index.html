@@ -8,24 +8,20 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
-        /* アクセントカラーとフォントの設定 */
+        /* フォントとアクセントカラー設定 */
         tailwind.config = { theme: { extend: { colors: { 'accent-blue': '#007AFF' } } } }
-        
-        /* メインタイトルの字体（力強いセリフ体） */
-        .font-main-title {
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: -0.02em;
-        }
-
-        .creative-underline { position: relative; }
-        .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: currentColor; transition: width 0.3s; }
-        .creative-underline:hover::after { width: 100%; }
+        .font-main-title { font-family: "Times New Roman", Times, serif; letter-spacing: -0.02em; }
         
         [x-cloak] { display: none !important; }
         html { scroll-behavior: smooth; }
-        
-        /* スクロール時の位置調整 */
         section { scroll-margin-top: 80px; }
+
+        /* 購入完了時のふわっとしたアニメーション */
+        .fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp()">
@@ -36,207 +32,119 @@
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <a href="#" class="text-2xl font-bold text-accent-blue font-main-title">Miho Takahashi</a>
         
-        <div class="flex items-center space-x-2 md:space-x-6">
-            <div class="hidden md:flex items-center space-x-8 mr-4">
-                <template x-for="link in navLinks">
-                    <a :href="link.href" class="text-[10px] uppercase font-bold tracking-widest creative-underline opacity-70 hover:opacity-100 transition-opacity" x-text="link.name"></a>
-                </template>
-            </div>
-
+        <div class="flex items-center space-x-4">
             <button @click="cartOpen = true" class="relative p-2 text-accent-blue hover:scale-110 transition-transform">
-                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                <span x-show="cartCount > 0" class="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center" x-text="cartCount"></span>
+                <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                <span x-show="cartCount > 0" 
+                      class="absolute -top-1 -right-1 bg-accent-blue text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm" 
+                      x-text="cartCount"></span>
             </button>
 
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-accent-blue z-[60] relative">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-accent-blue relative z-[60]">
                 <i data-lucide="menu" x-show="!mobileMenuOpen"></i>
                 <i data-lucide="x" x-show="mobileMenuOpen" x-cloak></i>
             </button>
         </div>
     </div>
-
-    <div x-show="mobileMenuOpen" 
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0 translate-y-[-10px]"
-         x-transition:enter-end="opacity-100 translate-y-0"
-         x-cloak
-         class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center md:hidden">
-        <div class="flex flex-col items-center space-y-8">
-            <template x-for="link in navLinks">
-                <a :href="link.href" 
-                   @click="mobileMenuOpen = false"
-                   class="text-2xl font-main-title font-bold tracking-[0.2em] text-gray-800 hover:text-accent-blue" 
-                   x-text="link.name"></a>
-            </template>
-        </div>
-    </div>
 </nav>
 
 <section id="home" class="relative h-screen flex items-center justify-center bg-[#FFF5F7] overflow-hidden">
-    
     <div class="absolute inset-0 z-0 pointer-events-none">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/2 w-[600px] h-[600px] bg-pink-200/50 rounded-full blur-[120px]"></div>
-        <div class="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-pink-100/60 rounded-full blur-[100px]"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[700px] h-[300px] md:h-[700px] bg-pink-200/60 rounded-full blur-[80px] md:blur-[140px]"></div>
     </div>
 
     <div class="text-center relative z-10 px-6">
         <h1 class="text-6xl md:text-9xl font-main-title font-bold mb-8 text-gray-800 leading-tight">
             Creative & <br><span class="text-accent-blue">Colorful</span>
         </h1>
-        <p class="text-gray-500 mb-12 tracking-[0.2em] uppercase text-xs font-bold">Illustration & Product Design</p>
-        
+        <p class="text-gray-500 mb-12 tracking-[0.2em] uppercase text-[10px] md:text-xs font-bold">Illustration & Product Design</p>
         <button @click="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})" 
                 class="inline-block bg-accent-blue text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:shadow-2xl hover:-translate-y-1 transition-all">
             Explore Shop
         </button>
     </div>
 
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-300 animate-bounce">
-        <i data-lucide="chevron-down"></i>
+    <div class="absolute bottom-10 left-0 w-full flex justify-center text-accent-blue/40 animate-bounce z-10">
+        <i data-lucide="chevron-down" class="w-8 h-8"></i>
     </div>
 </section>
 
-<section id="concept" class="py-32 px-6 bg-white border-b border-gray-50">
-    <div class="max-w-3xl mx-auto text-center">
-        <span class="text-accent-blue text-[10px] font-bold tracking-[0.4em] uppercase block mb-10">Concept</span>
-        <h2 class="text-3xl md:text-4xl font-main-title font-bold mb-10 leading-relaxed text-gray-800 italic">
-            日常を彩る、小さな物語。
-        </h2>
-        <p class="text-gray-500 leading-relaxed text-base md:text-lg">
-            Miho Takahashiの描く世界は、何気ない日常を少しだけ特別なものに変えます。<br class="hidden md:block">
-            制作されたイラストから生まれたプロダクトたちが、<br class="hidden md:block">
-            あなたの暮らしにワクワクと彩りをお届けします。
-        </p>
-    </div>
-</section>
-
-<section id="lookbook" class="py-32 px-6 bg-[#fafafa]">
+<section id="shop" class="py-24 md:py-32 px-6 bg-white">
     <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-24">
-            <span class="text-accent-blue text-[10px] font-bold tracking-[0.4em] uppercase block mb-4">Look Book</span>
-            <h2 class="text-3xl md:text-5xl font-main-title font-bold text-gray-800">Collections</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
-            <div class="text-center group">
-                <div class="aspect-video w-full mb-8 overflow-hidden rounded-2xl bg-white shadow-sm group-hover:shadow-2xl transition-all duration-500">
-                    <img src="sinkaiwhite.svg" alt="2025 Winter collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <h3 class="font-main-title text-2xl text-gray-800 italic">2025 Winter collection</h3>
-            </div>
-
-            <div class="text-center group">
-                <div class="aspect-video w-full mb-8 overflow-hidden rounded-2xl bg-white shadow-sm group-hover:shadow-2xl transition-all duration-500">
-                    <img src="siteimage.svg" alt="2026 Spring collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                </div>
-                <h3 class="font-main-title text-2xl text-gray-800 italic">2026 Spring collection</h3>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="shop" class="py-32 px-6 bg-white">
-    <div class="max-w-7xl mx-auto">
-        <h2 class="text-4xl md:text-6xl font-main-title font-bold mb-24 text-center">Shop</h2>
+        <h2 class="text-4xl md:text-6xl font-main-title font-bold mb-16 md:mb-24 text-center">Shop</h2>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-8">
             <template x-for="item in products" :key="item.id">
                 <div class="flex flex-col items-center text-center group">
                     <div class="w-full aspect-square mb-6 bg-pink-50/50 rounded-3xl flex items-center justify-center p-8 relative overflow-hidden transition-all group-hover:shadow-xl border border-pink-100/20">
                         <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
                         
-                        <button @click="addToCart(item)" class="absolute bottom-6 right-6 md:inset-0 md:flex md:items-center md:justify-center bg-accent-blue md:bg-accent-blue/5 text-white md:opacity-0 group-hover:opacity-100 transition-opacity rounded-full md:rounded-none p-4 md:p-0">
-                            <span class="md:bg-accent-blue md:text-white md:p-4 md:rounded-full md:shadow-lg transform md:translate-y-4 group-hover:translate-y-0 transition-all">
-                                <i data-lucide="plus"></i>
-                            </span>
+                        <button @click="addToCart(item)" 
+                                class="absolute bottom-4 right-4 bg-gray-900 text-white p-4 rounded-full shadow-2xl md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0 flex items-center justify-center z-20 active:scale-90">
+                            <i data-lucide="plus" class="w-6 h-6 stroke-[3px]"></i>
                         </button>
                     </div>
                     
                     <h3 class="text-xl md:text-base font-bold text-gray-800 mb-1" x-text="item.title"></h3>
-                    <p class="text-base md:text-sm text-gray-400 font-main-title italic" x-text="'¥' + item.price.toLocaleString()"></p>
+                    <p class="text-lg md:text-sm text-gray-400 font-main-title italic" x-text="'¥' + item.price.toLocaleString()"></p>
                 </div>
             </template>
         </div>
     </div>
 </section>
-<footer id="contact" class="bg-white border-t border-pink-100 pt-24 pb-12 px-6">
-    <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24">
-            <div class="md:col-span-5 space-y-8">
-                <h3 class="text-3xl font-bold text-accent-blue font-main-title">Miho Takahashi</h3>
-                <p class="text-gray-400 text-sm leading-relaxed max-w-sm">
-                    色彩豊かなイラストレーションを通じて、日常を少しだけ特別なものに変えるプロダクトを提案します。
-                </p>
-                <div class="flex space-x-5">
-                    <a href="#" class="text-gray-300 hover:text-accent-blue transition-colors"><i data-lucide="instagram"></i></a>
-                    <a href="mailto:info@example.com" class="text-gray-300 hover:text-accent-blue transition-colors"><i data-lucide="mail"></i></a>
-                </div>
-            </div>
-            
-            <div class="md:col-span-3">
-                <h4 class="text-[10px] uppercase font-bold tracking-[0.3em] text-gray-300 mb-8">Navigation</h4>
-                <ul class="space-y-4 text-sm font-medium">
-                    <li><a href="#" class="text-gray-600 hover:text-accent-blue transition-colors">Home</a></li>
-                    <li><a href="#concept" class="text-gray-600 hover:text-accent-blue transition-colors">Concept</a></li>
-                    <li><a href="#lookbook" class="text-gray-600 hover:text-accent-blue transition-colors">Look Book</a></li>
-                    <li><a href="#shop" class="text-gray-600 hover:text-accent-blue transition-colors">Shop</a></li>
-                </ul>
-            </div>
 
-            <div class="md:col-span-4">
-                <h4 class="text-[10px] uppercase font-bold tracking-[0.3em] text-gray-300 mb-8">Newsletter</h4>
-                <p class="text-xs text-gray-400 mb-6 leading-relaxed">新作情報やイベントのご案内をいち早くお届けします。</p>
-                <div class="flex border-b border-gray-100 pb-2">
-                    <input type="email" placeholder="email@example.com" class="bg-transparent border-none w-full text-sm outline-none">
-                    <button class="text-accent-blue hover:translate-x-1 transition-transform">
+<div x-show="cartOpen" x-cloak class="fixed inset-0 z-[100]">
+    <div x-show="cartOpen" @click="if(!isProcessing) cartOpen = false" x-transition:enter="transition opacity-0" x-transition:enter-end="opacity-100" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+    <div x-show="cartOpen" x-transition:enter="transition transform duration-300 translate-x-full" x-transition:enter-end="translate-x-0" class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col p-8">
+        
+        <div class="flex justify-between items-center mb-12">
+            <h2 class="text-2xl font-main-title font-bold" x-text="purchaseStep === 'cart' ? 'Your Cart' : 'Checkout'"></h2>
+            <button @click="closeCart()" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x"></i></button>
+        </div>
+
+        <template x-if="purchaseStep === 'cart'">
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <div class="flex-1 overflow-y-auto pr-2">
+                    <template x-if="cart.length === 0">
+                        <div class="h-full flex flex-col items-center justify-center text-gray-300 space-y-4 italic font-main-title">
+                            <i data-lucide="shopping-cart" class="w-12 h-12 stroke-[1]"></i>
+                            <p>Your cart is empty.</p>
+                        </div>
+                    </template>
+                    <template x-for="item in cart" :key="item.id">
+                        <div class="flex space-x-6 mb-8 items-center">
+                            <div class="w-20 h-20 bg-pink-50 rounded-2xl p-3 flex-shrink-0"><img :src="item.img" class="w-full h-full object-contain"></div>
+                            <div class="flex-1">
+                                <h3 class="font-bold text-gray-800 text-sm" x-text="item.title"></h3>
+                                <p class="text-xs text-gray-400 font-main-title italic" x-text="'¥' + item.price.toLocaleString() + ' x ' + item.quantity"></p>
+                            </div>
+                            <button @click="removeFromCart(item.id)" class="text-gray-300 hover:text-red-400 transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </template>
+                </div>
+                <div x-show="cart.length > 0" class="pt-8 border-t space-y-6">
+                    <div class="flex justify-between items-center font-main-title">
+                        <span class="text-gray-400 uppercase tracking-widest text-xs">Total</span>
+                        <span class="text-2xl font-bold" x-text="'¥' + total.toLocaleString()"></span>
+                    </div>
+                    <button @click="processPurchase()" class="w-full bg-accent-blue text-white py-5 rounded-full font-bold uppercase tracking-widest hover:shadow-lg transition-all flex items-center justify-center space-x-2">
+                        <span x-text="isProcessing ? 'Processing...' : 'Checkout'"></span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
             </div>
-        </div>
+        </template>
 
-        <div class="pt-8 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 text-[10px] text-gray-300 font-bold tracking-[0.3em] uppercase">
-            <p>©2026 MIHO TAKAHASHI STUDIO. ALL RIGHTS RESERVED.</p>
-            <div class="flex space-x-8">
-                <a href="#" class="hover:text-gray-600 transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-gray-600 transition-colors">Terms</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<div x-show="cartOpen" x-cloak class="fixed inset-0 z-[100]">
-    <div x-show="cartOpen" @click="cartOpen = false" x-transition:enter="transition opacity-0" x-transition:enter-end="opacity-100" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
-    <div x-show="cartOpen" x-transition:enter="transition transform duration-300 translate-x-full" x-transition:enter-end="translate-x-0" class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col p-8">
-        <div class="flex justify-between items-center mb-12">
-            <h2 class="text-2xl font-main-title font-bold">Your Cart</h2>
-            <button @click="cartOpen = false" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex-1 overflow-y-auto">
-            <template x-if="cart.length === 0">
-                <div class="h-full flex flex-col items-center justify-center text-gray-300 space-y-4 italic font-main-title">
-                    <i data-lucide="shopping-cart" class="w-12 h-12 stroke-[1]"></i>
-                    <p>Your cart is empty.</p>
+        <template x-if="purchaseStep === 'complete'">
+            <div class="flex-1 flex flex-col items-center justify-center text-center space-y-6 fade-in-up">
+                <div class="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-4">
+                    <i data-lucide="check-circle" class="w-10 h-10"></i>
                 </div>
-            </template>
-            <template x-for="item in cart" :key="item.id">
-                <div class="flex space-x-6 mb-8 items-center animate-fade-in">
-                    <div class="w-20 h-20 bg-pink-50 rounded-2xl p-3 flex-shrink-0"><img :src="item.img" class="w-full h-full object-contain"></div>
-                    <div class="flex-1">
-                        <h3 class="font-bold text-gray-800 text-sm" x-text="item.title"></h3>
-                        <p class="text-xs text-gray-400 font-main-title italic" x-text="'¥' + item.price.toLocaleString()"></p>
-                    </div>
-                    <button @click="removeFromCart(item.id)" class="text-gray-300 hover:text-red-400 transition-colors"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                </div>
-            </template>
-        </div>
-        <div x-show="cart.length > 0" class="pt-8 border-t space-y-6">
-            <div class="flex justify-between items-center font-main-title">
-                <span class="text-gray-400 uppercase tracking-widest text-xs">Total</span>
-                <span class="text-2xl font-bold" x-text="'¥' + total.toLocaleString()"></span>
+                <h3 class="text-2xl font-main-title font-bold text-gray-800">Thank you!</h3>
+                <p class="text-gray-500 text-sm">ご購入ありがとうございます。<br>注文確認メールをお送りしました。</p>
+                <button @click="closeCart()" class="mt-8 text-accent-blue font-bold border-b-2 border-accent-blue pb-1 hover:opacity-50 transition-opacity">Back to Shop</button>
             </div>
-            <button class="w-full bg-accent-blue text-white py-5 rounded-full font-bold uppercase tracking-widest hover:shadow-lg transition-all">Checkout</button>
-        </div>
+        </template>
     </div>
 </div>
 
@@ -246,14 +154,9 @@
             scrolled: false,
             cartOpen: false,
             mobileMenuOpen: false, 
+            purchaseStep: 'cart',
+            isProcessing: false,
             cart: [],
-            navLinks: [
-                { name: 'Home', href: '#' },
-                { name: 'Concept', href: '#concept' },
-                { name: 'Look Book', href: '#lookbook' },
-                { name: 'Shop', href: '#shop' },
-                { name: 'Contact', href: '#contact' },
-            ],
             products: [
                 { id: '01', title: 'Art Mag Cup', price: 2800, img: 'mag.png' },
                 { id: '02', title: 'Canvas Art Print', price: 12000, img: 'kaiga.png' },
@@ -262,13 +165,32 @@
             ],
             get cartCount() { return this.cart.reduce((sum, item) => sum + item.quantity, 0) },
             get total() { return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) },
+            
             addToCart(product) {
                 const existing = this.cart.find(i => i.id === product.id);
                 if (existing) { existing.quantity++ } else { this.cart.push({...product, quantity: 1}) }
                 this.cartOpen = true;
+                this.purchaseStep = 'cart';
                 setTimeout(() => lucide.createIcons(), 50);
             },
             removeFromCart(id) { this.cart = this.cart.filter(i => i.id !== id) },
+            
+            processPurchase() {
+                this.isProcessing = true;
+                // 仮想の読み込み時間
+                setTimeout(() => {
+                    this.isProcessing = false;
+                    this.purchaseStep = 'complete';
+                    this.cart = []; // 購入後にカートを空にする
+                    lucide.createIcons();
+                }, 800);
+            },
+            
+            closeCart() {
+                this.cartOpen = false;
+                setTimeout(() => { this.purchaseStep = 'cart'; }, 500);
+            },
+            
             init() { lucide.createIcons(); }
         }
     }
