@@ -13,6 +13,7 @@
         .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: currentColor; transition: width 0.3s; }
         .creative-underline:hover::after { width: 100%; }
         [x-cloak] { display: none !important; }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp()">
@@ -81,49 +82,49 @@
     </section>
 
     <section id="lookbook" class="py-32 px-6 bg-[#fafafa]">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20">
-            <span class="text-accent-blue text-xs font-bold tracking-[0.3em] uppercase block mb-4">Look Book</span>
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-800">Collections</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
-            <div class="text-center">
-                <div class="aspect-video w-full mb-6 overflow-hidden rounded-lg">
-                    <img src="sinkaiwhite.svg" alt="2025 Winter collection" class="w-full h-full object-cover">
-                </div>
-                <h3 class="font-serif text-xl text-gray-800 italic">2025 Winter collection</h3>
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <span class="text-accent-blue text-xs font-bold tracking-[0.3em] uppercase block mb-4">Look Book</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-gray-800">Collections</h2>
             </div>
 
-            <div class="text-center">
-                <div class="aspect-video w-full mb-6 overflow-hidden rounded-lg">
-                    <img src="siteimage.svg" alt="2026 Spring collection" class="w-full h-full object-cover">
-                </div>
-                <h3 class="font-serif text-xl text-gray-800 italic">2026 Spring collection</h3>
-            </div>
-        </div>
-    </div>
-</section>
-
-  <section id="shop" class="py-32 px-6 bg-white">
-    <div class="max-w-7xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center">Shop</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            <template x-for="item in products" :key="item.id">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all group text-center">
-                    <div class="aspect-square mb-4 bg-pink-50 rounded-xl flex items-center justify-center p-4 relative">
-                        <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform">
-                        <button @click="addToCart(item)" class="absolute inset-0 flex items-center justify-center bg-accent-blue/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
-                            <span class="bg-accent-blue text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></span>
-                        </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
+                <div class="text-center">
+                    <div class="aspect-video w-full mb-6 overflow-hidden rounded-lg bg-gray-100">
+                        <img src="sinkaiwhite.svg" alt="2025 Winter collection" class="w-full h-full object-cover">
                     </div>
-                    <h3 class="font-bold text-gray-800" x-text="item.title"></h3>
-                    <p class="text-sm text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
+                    <h3 class="font-serif text-xl text-gray-800 italic">2025 Winter collection</h3>
                 </div>
-            </template>
+
+                <div class="text-center">
+                    <div class="aspect-video w-full mb-6 overflow-hidden rounded-lg bg-gray-100">
+                        <img src="siteimage.svg" alt="2026 Spring collection" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-serif text-xl text-gray-800 italic">2026 Spring collection</h3>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <section id="shop" class="py-32 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-center">Shop</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <template x-for="item in products" :key="item.id">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all group flex flex-col items-center text-center">
+                        <div class="w-full aspect-square mb-4 bg-pink-50 rounded-xl flex items-center justify-center p-4 relative">
+                            <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform">
+                            <button @click="addToCart(item)" class="absolute inset-0 flex items-center justify-center bg-accent-blue/10 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                                <span class="bg-accent-blue text-white p-3 rounded-full shadow-lg"><i data-lucide="plus"></i></span>
+                            </button>
+                        </div>
+                        <h3 class="font-bold text-gray-800" x-text="item.title"></h3>
+                        <p class="text-sm text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
 
     <div x-show="cartOpen" x-cloak class="fixed inset-0 z-[70]">
         <div x-show="cartOpen" @click="cartOpen = false" class="absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity"></div>
