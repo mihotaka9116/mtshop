@@ -64,19 +64,22 @@
     </section>
 
     <section id="shop" class="py-32 px-6 bg-white">
-        <div class="max-w-7xl mx-auto text-center"> <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-gray-800">Shop</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12"> <template x-for="item in products" :key="item.id">
-                    <div class="group">
-                        <div class="mb-4">
-                            <h3 class="font-bold text-xl lg:text-base text-gray-800 mb-1" x-text="item.title"></h3>
-                            <p class="text-accent-blue font-bold text-lg lg:text-base" x-text="'¥' + item.price.toLocaleString()"></p>
-                        </div>
-                        <div class="aspect-square bg-gray-50 rounded-2xl overflow-hidden relative mx-auto max-w-[500px]">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-20 text-gray-800">Shop</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
+                <template x-for="item in products" :key="item.id">
+                    <div class="group flex flex-col items-center"> <div class="aspect-[4/3] w-full h-64 md:h-80 mb-6 bg-gray-50 rounded-2xl overflow-hidden relative mx-auto max-w-[600px] shadow-md border border-gray-100">
                             <img :src="item.img" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                             <button @click="addToCart(item)" class="absolute bottom-4 right-4 bg-white text-accent-blue p-4 rounded-xl shadow-xl md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-2 md:group-hover:translate-y-0">
                                 <i data-lucide="plus"></i>
                             </button>
                         </div>
+
+                        <div class="text-center">
+                            <h3 class="font-bold text-xl lg:text-base text-gray-800 mb-1" x-text="item.title"></h3>
+                            <p class="text-accent-blue font-bold text-lg lg:text-base" x-text="'¥' + item.price.toLocaleString()"></p>
+                        </div>
+
                     </div>
                 </template>
             </div>
@@ -93,16 +96,16 @@
             <div class="flex-1 overflow-y-auto p-6 space-y-6">
                 <template x-if="cart.length === 0"><p class="text-center text-gray-400 py-10">カートは空です</p></template>
                 <template x-for="item in cart">
-                    <div class="flex space-x-4">
-                        <img :src="item.img" class="w-20 h-20 object-cover rounded-lg">
+                    <div class="flex space-x-4 items-center">
+                        <img :src="item.img" class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
                         <div class="flex-1">
                             <h4 class="font-bold text-sm" x-text="item.title"></h4>
                             <p class="text-xs text-gray-500" x-text="'¥' + item.price.toLocaleString()"></p>
-                            <div class="flex items-center justify-between mt-2">
+                            <div class="flex items-center justify-between mt-1">
                                 <div class="flex items-center border rounded-md">
-                                    <button @click="updateQty(item.id, -1)" class="px-2">-</button>
+                                    <button @click="updateQty(item.id, -1)" class="px-2 py-0.5">-</button>
                                     <span class="px-2 text-xs" x-text="item.quantity"></span>
-                                    <button @click="updateQty(item.id, 1)" class="px-2">+</button>
+                                    <button @click="updateQty(item.id, 1)" class="px-2 py-0.5">+</button>
                                 </div>
                                 <button @click="removeFromCart(item.id)" class="text-gray-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </div>
@@ -112,7 +115,7 @@
             </div>
             <div x-show="cart.length > 0" class="p-6 border-t bg-gray-50">
                 <div class="flex justify-between mb-4 font-bold text-lg"><span>Total</span><span x-text="'¥' + total.toLocaleString()"></span></div>
-                <button class="w-full bg-accent-blue text-white py-4 rounded-xl font-bold">Checkout</button>
+                <button class="w-full bg-accent-blue text-white py-4 rounded-xl font-bold Checkout-btn hover:brightness-110 transition-all">Checkout</button>
             </div>
         </div>
     </div>
@@ -149,7 +152,6 @@
             return {
                 scrolled: false, cartOpen: false, mobileMenuOpen: false, cart: [],
                 navLinks: [{ name: 'Home', href: '#' }, { name: 'Shop', href: '#shop' }, { name: 'Contact', href: '#contact' }],
-                // 商品データを正しく設定
                 products: [
                     { id: 1, title: 'Mag Cup', price: 2800, img: 'mag.png' },
                     { id: 2, title: 'T shirt', price: 3800, img: 'shirt.png' },
