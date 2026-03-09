@@ -66,9 +66,12 @@
                       x-text="cartCount"></span>
             </button>
 
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-accent-blue relative z-[100] p-2">
-                <i data-lucide="menu" x-show="!mobileMenuOpen"></i>
-                <i data-lucide="x" x-show="mobileMenuOpen" x-cloak></i>
+            <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                    class="md:hidden text-accent-blue relative z-[100] p-2 focus:outline-none">
+                <div class="relative w-6 h-6 flex items-center justify-center">
+                    <i data-lucide="menu" x-show="!mobileMenuOpen" class="absolute"></i>
+                    <i data-lucide="x" x-show="mobileMenuOpen" x-cloak class="absolute"></i>
+                </div>
             </button>
         </div>
     </div>
@@ -104,11 +107,8 @@
             Explore Shop
         </button>
     </div>
-    <div class="absolute bottom-10 left-0 right-0 flex justify-center text-accent-blue/40 animate-bounce">
-        <i data-lucide="chevron-down" class="w-8 h-8"></i>
-    </div>
 </section>
-    
+
 <section id="concept" class="py-24 px-6 bg-white border-b border-gray-50 text-center">
     <div class="max-w-4xl mx-auto">
         <h2 class="text-4xl md:text-5xl font-serif font-bold mb-12">Concept</h2>
@@ -128,7 +128,7 @@
                 <div class="aspect-[4/5] bg-white rounded-[40px] overflow-hidden shadow-sm flex items-center justify-center p-4 h-full transition-transform duration-500 group-hover:scale-[1.02]">
                     <img src="sinkaiwhite.svg" class="w-full h-full object-contain" alt="2025 Winter">
                 </div>
-                <div class="mt-8">
+                <div class="mt-8 text-center">
                     <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-2">2025 Winter collection</p>
                     <h3 class="text-2xl font-serif font-bold">少女と海</h3>
                 </div>
@@ -137,7 +137,7 @@
                 <div class="aspect-[4/5] bg-white rounded-[40px] overflow-hidden shadow-sm flex items-center justify-center p-4 h-full transition-transform duration-500 group-hover:scale-[1.02]">
                     <img src="siteimage.svg" class="w-full h-full object-contain" alt="2026 Spring">
                 </div>
-                <div class="mt-8">
+                <div class="mt-8 text-center">
                     <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-2">2026 Spring collection</p>
                     <h3 class="text-2xl font-serif font-bold">New Bloom</h3>
                 </div>
@@ -147,9 +147,9 @@
 </section>
 
 <section id="shop" class="py-24 px-6 bg-white border-t border-gray-50">
-    <div class="max-w-7xl mx-auto">
-        <h2 class="text-4xl md:text-5xl font-serif font-bold mb-16 text-center">Shop</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-serif font-bold mb-16">Shop</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 text-left">
             <template x-for="item in products" :key="item.id">
                 <div class="flex flex-col items-center text-center group">
                     <div class="w-full aspect-square mb-6 bg-pink-50/50 rounded-[40px] flex items-center justify-center p-8 relative overflow-hidden transition-all group-hover:shadow-2xl cursor-pointer"
@@ -182,68 +182,14 @@
             <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-4">Product Details</p>
             <h2 class="text-3xl font-serif font-bold mb-4" x-text="selectedItem?.title"></h2>
             <p class="text-2xl font-serif italic mb-8" x-text="'¥' + selectedItem?.price.toLocaleString()"></p>
-            <div class="space-y-6 mb-10 overflow-y-auto max-h-[200px] pr-2">
-                <div>
-                    <h4 class="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-1">Description</h4>
-                    <p class="text-sm text-gray-600 leading-relaxed" x-text="selectedItem?.description"></p>
-                </div>
-            </div>
-            <button @click="addToCart(selectedItem); detailOpen = false" 
-                    class="w-full bg-[#007AFF] text-white py-5 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-blue-700 transition-all flex justify-center items-center space-x-3">
-                <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                <span>Add to Cart</span>
-            </button>
-        </div>
-    </div>
-</div>
-
-<div x-show="cartOpen" x-cloak class="fixed inset-0 z-[120]">
-    <div @click="cartOpen = false" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-    <div x-show="cartOpen" x-transition:enter="transition transform duration-300 translate-x-full" 
-         class="absolute top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col p-10">
-        <div class="flex justify-between items-center mb-12">
-            <h2 class="text-2xl font-serif font-bold" x-text="purchaseStep === 'cart' ? 'Your Cart' : 'Success!'"></h2>
-            <button @click="cartOpen = false" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200"><i data-lucide="x"></i></button>
-        </div>
-        <div class="flex-1 overflow-hidden">
-            <template x-if="purchaseStep === 'cart'">
-                <div class="h-full flex flex-col">
-                    <div class="flex-1 overflow-y-auto pr-2">
-                        <template x-if="cart.length === 0">
-                            <div class="h-full flex flex-col items-center justify-center text-gray-300 italic"><p>Cart is empty.</p></div>
-                        </template>
-                        <template x-for="item in cart" :key="item.id">
-                            <div class="flex space-x-6 mb-8 items-center border-b border-gray-50 pb-6 text-left">
-                                <div class="w-20 h-20 bg-pink-50 rounded-2xl p-3 flex-shrink-0"><img :src="item.img" class="w-full h-full object-contain"></div>
-                                <div class="flex-1"><h4 class="font-bold text-sm" x-text="item.title"></h4><p class="text-xs text-gray-400 font-serif italic" x-text="'¥' + item.price.toLocaleString()"></p></div>
-                                <button @click="removeFromCart(item.id)" class="text-red-200 hover:text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                            </div>
-                        </template>
-                    </div>
-                    <div x-show="cart.length > 0" class="pt-8 border-t bg-white">
-                        <div class="flex justify-between items-center mb-8"><span class="text-gray-400 uppercase text-xs tracking-widest">Total</span><span class="text-3xl font-bold" x-text="'¥' + total.toLocaleString()"></span></div>
-                        <button @click="processPurchase()" class="w-full bg-[#007AFF] text-white py-6 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-blue-700 transition-all flex justify-center items-center">
-                            <span x-text="isProcessing ? 'Processing...' : 'Checkout Now'"></span>
-                        </button>
-                    </div>
-                </div>
-            </template>
-            <template x-if="purchaseStep === 'complete'">
-                <div class="h-full flex flex-col items-center justify-center text-center space-y-6">
-                    <div class="text-green-500 bg-green-50 w-24 h-24 rounded-full flex items-center justify-center"><i data-lucide="check-circle" class="w-12 h-12"></i></div>
-                    <h3 class="text-3xl font-serif font-bold">Thank you!</h3>
-                    <button @click="cartOpen = false; purchaseStep = 'cart'" class="mt-8 text-accent-blue font-bold border-b-2 border-accent-blue pb-2">Back to Shop</button>
-                </div>
-            </template>
+            <button @click="addToCart(selectedItem); detailOpen = false" class="w-full bg-[#007AFF] text-white py-5 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-blue-700 transition-all">Add to Cart</button>
         </div>
     </div>
 </div>
 
 <footer class="bg-gray-50 py-24 px-6 border-t border-gray-100 text-center">
-    <div class="max-w-7xl mx-auto">
-        <h3 class="text-3xl font-bold text-accent-blue font-serif mb-8">Miho Takahashi</h3>
-        <p class="text-[10px] text-gray-300 font-bold tracking-[0.3em] uppercase">©2026 MIHO TAKAHASHI STUDIO.</p>
-    </div>
+    <h3 class="text-3xl font-bold text-accent-blue font-serif mb-8">Miho Takahashi</h3>
+    <p class="text-[10px] text-gray-300 font-bold tracking-[0.3em] uppercase">©2026 MIHO TAKAHASHI STUDIO.</p>
 </footer>
 
 <script>
@@ -274,15 +220,6 @@
                 setTimeout(() => lucide.createIcons(), 100);
             },
             removeFromCart(id) { this.cart = this.cart.filter(i => i.id !== id) },
-            processPurchase() {
-                this.isProcessing = true;
-                setTimeout(() => {
-                    this.isProcessing = false;
-                    this.purchaseStep = 'complete';
-                    this.cart = [];
-                    setTimeout(() => lucide.createIcons(), 100);
-                }, 1000);
-            },
             init() { 
                 lucide.createIcons();
                 setTimeout(() => lucide.createIcons(), 100);
