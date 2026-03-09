@@ -121,7 +121,7 @@
                 </div>
                 <div class="mt-8">
                     <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-2">2025 Winter collection</p>
-                    <h3 class="text-2xl font-serif font-bold">Sinkai - 深海</h3>
+                    <h3 class="text-2xl font-serif font-bold">少女と海</h3>
                 </div>
             </div>
             <div class="group flex flex-col h-full">
@@ -130,7 +130,7 @@
                 </div>
                 <div class="mt-8">
                     <p class="text-[10px] tracking-[0.3em] uppercase font-black text-accent-blue mb-2">2026 Spring collection</p>
-                    <h3 class="text-2xl font-serif font-bold">New Bloom - 萌芽</h3>
+                    <h3 class="text-2xl font-serif font-bold">New Bloom</h3>
                 </div>
             </div>
         </div>
@@ -146,10 +146,11 @@
                     <div class="w-full aspect-square mb-6 bg-pink-50/50 rounded-[40px] flex items-center justify-center p-8 relative overflow-hidden transition-all group-hover:shadow-2xl cursor-pointer"
                          @click="openDetail(item)">
                         <img :src="item.img" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
-                        <button @click.stop="addToCart(item)" 
-                                class="absolute bottom-6 right-6 bg-gray-900 w-14 h-14 rounded-full shadow-xl flex items-center justify-center z-20 transition-all md:opacity-0 md:group-hover:opacity-100 active:scale-95">
-                            <span class="white-plus"></span>
-                        </button>
+                      <button @click="addToCart(selectedItem); detailOpen = false" 
+        class="w-full bg-[#007AFF] text-white py-5 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-blue-700 transition-all flex justify-center items-center space-x-3">
+    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+    <span>Add to Cart</span>
+</button>
                     </div>
                     <h3 class="text-xl font-bold cursor-pointer" @click="openDetail(item)" x-text="item.title"></h3>
                     <p class="text-gray-400 font-serif italic text-sm" x-text="'¥' + item.price.toLocaleString()"></p>
