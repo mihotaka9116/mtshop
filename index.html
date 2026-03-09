@@ -80,24 +80,26 @@
 </nav>
 
 <section id="home" class="relative h-screen flex items-center justify-center bg-[#FFF5F7] overflow-hidden">
-    <div class="absolute inset-0 z-0">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[700px] h-[300px] md:h-[700px] bg-pink-200/60 rounded-full blur-[80px] md:blur-[140px]"></div>
+    <div class="absolute inset-0 z-0 hidden md:block">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-pink-200/60 rounded-full blur-[140px]"></div>
     </div>
 
     <div class="text-center relative z-10 px-6">
         <h1 class="text-6xl md:text-9xl font-serif font-bold mb-8 text-gray-800 leading-tight">
             Creative & <br><span class="text-accent-blue">Colorful</span>
         </h1>
+        
         <button @click="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})" 
-                class="bg-accent-blue text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest shadow-xl hover:bg-blue-600 transition-all">
+                class="bg-transparent text-accent-blue border-2 border-accent-blue px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-accent-blue hover:text-white transition-all transform active:scale-95 shadow-lg shadow-accent-blue/5">
             Explore Shop
         </button>
     </div>
+
     <div class="absolute bottom-10 left-0 right-0 flex justify-center text-accent-blue/40 animate-bounce">
         <i data-lucide="chevron-down" class="w-8 h-8"></i>
     </div>
 </section>
-
+    
 <section id="concept" class="py-24 px-6 bg-white border-b border-gray-50 text-center">
     <div class="max-w-4xl mx-auto">
         <h2 class="text-4xl md:text-5xl font-serif font-bold mb-12">Concept</h2>
