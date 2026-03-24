@@ -12,7 +12,7 @@
         .creative-underline { position: relative; }
         .creative-underline::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0; background-color: currentColor; transition: width 0.3s; }
         .creative-underline:hover::after { width: 100%; }
-        [x-cloak] { display: none !important; }
+        [x-cloak] { display: none; }
     </style>
 </head>
 <body class="bg-white selection:bg-accent-blue selection:text-white" x-data="shopApp()">
